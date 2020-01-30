@@ -1,0 +1,128 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 106px;
+  font-family: sans-serif;
+}
+
+img {
+  display: block;
+}
+
+body, html {
+  height: 100%;
+}
+
+.botlecan {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100%;
+}
+
+.botles {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.botlebox {
+  margin: 0 20px;
+  position: relative;
+}
+.botlebox img{
+  width: 80%;
+  margin: auto;
+}
+.filbotle {
+  position: absolute;
+  background: url("../images/sprite.png") no-repeat;
+  background-position: bottom center;
+  height: 0;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  transition: height 0.4s linear;
+  -webkit-transition: height 0.4s linear;
+  -moz-transition: height 0.4s linear;
+  -ms-transition: height 0.4s linear;
+  -o-transition: height 0.4s linear;
+  background-size: 80%;
+}
+.botle-form{
+        position: absolute;
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+    background: lightgray;
+    border-top: 1px solid #ddd;
+    bottom: 0;
+    left: 0;
+    }
+.botle-form    input{
+    width: 330px;
+    height: 45px;
+    padding: 0 20px;
+    border: 1px solid green;
+    }
+    .botle-form button{
+        border: 1px solid green;
+    color: #fff;
+    background: green;
+    font-size: 18px;
+    text-transform: uppercase;
+    }
+    .botle-formtop{
+      margin-right: 20px;
+    }
+    .botle-formtop,.botle-formdet{
+       display: flex;
+    }
+    .botle-formdet{
+      margin-left: 20px;
+      align-items: center;
+    }
+    .botle-formdet label{
+      font-weight: normal;
+      color: grey;
+      margin: 0 20px;
+      font-size: 14px;
+    }
+    .botle-formdet label strong{
+      display:block;
+      font-size: 22px;
+      color: #000;
+    }
+/*# sourceMappingURL=style.css.map */
+
+
+.error {
+    background-color: #FF898D;
+    border: 1px solid #000;
+        position: fixed;
+    bottom: 120px;
+    width: 100%;
+    max-width: 250px;
+    left: calc(50% - 125px);
+    padding: 14px;
+    border: 0;
+    text-align: center;
+    z-index: 3;
+}
+
+.checkbox-error {
+    color: #FF898D;
+}
