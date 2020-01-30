@@ -86,7 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   			if(extendAmount >= 0){
   				start_amount = extendAmount;
   				$('.filbotle').eq(number_of_bottle).css("height",'100%');
-  				number_of_bottle = number_of_bottle+1;
+  				number_of_bottle = number_of_bottle+1; 
 
   			}
   			var percentage = start_amount * 100 / revenue_amount;

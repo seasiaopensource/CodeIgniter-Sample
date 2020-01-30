@@ -21,6 +21,6 @@ class Status extends CI_Controller {
 	public function bottles($revenue=0)
 	{	
 		$this->load->helper('url');
-		$this->load->view('status');
+		$this->load->view('status'); 
 	}
 }
