@@ -1,0 +1,186 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class UserSettings extends CI_Controller {
+
+	public $project = "sp_dashboard";
+	public $category = "settings";
+	public $verbose_name = "Ayar";
+	public $verbose_name_plural = "Ayarlar";
+	
+
+	public function __construct(){
+		parent::__construct();
+
+		login_required_spuser();
+	
+		$this->load->model("UserModel");
+
+	}
+
+	public function index(){
+		$items = $this->UserModel->get_all();
+
+		$context=array(
+			"title"		=>	"Kullanıcılar",
+			"card_title"	=>	"Kullanıcı Listesi",
+			"items" 	=>	$items,
+			"DataTablesField"	=> "datatable"
+		);
+		render_dashboard_view($context);
+	}
+
+	public function create()
+	{
+			
+			$item = $this->UserModel->get(
+				array(
+					"id"	=> $this->user->id,
+				)
+			);
+			
+			$context=array(
+				"title"		=>	$this->verbose_name . " Oluştur",
+				"card_title"	=>	$this->verbose_name . " Ekle",
+				"CKEditorField"	=>	array(
+					"description" => "description"
+				),
+				"item" 		=>	$item,
+			);
+			render_dashboard_view($context);
+		}
+		public function update(){
+			$this->load->library("form_validation");
+
+			$this->form_validation->set_rules("first_name", "İsim", "required|trim");
+			$this->form_validation->set_rules("last_name", "Soyisim", "required|trim");
+			$this->form_validation->set_rules("email", "Eposta", "required|trim");
+			
+			$this->form_validation->set_message(
+				array(
+					"required"  => "<b>{field}</b> alanı doldurulmalıdır"
+				)
+			);
+
+			$validate = $this->form_validation->run();
+			if($validate){
+				$update =$this->UserModel->update(
+					array(
+						"id"    => $this->user->id
+					),
+					array(
+						"first_name"         => $this->input->post("first_name"),
+						"last_name"   => $this->input->post("last_name"),
+						"email"   => $this->input->post("email"),
+					)
+				);
+				
+				toast_field_update($update);
+			}
+			else{
+				$item = $this->UserModel->get(
+					array(
+						"id"	=> $this->user->id,
+					)
+				);
+				
+				$context=array(
+					"title"		=>	"Kullanıcı Güncelle",
+					"card_title"	=>	"Kullanıcı Güncelle",
+					"CKEditorField"	=>	array(
+						"description" => "description"
+					),
+					"item" 		=>	$item,
+					"form_errors"	=> validation_errors(),
+				);
+				render_dashboard_view($context);
+
+			}
+			 
+			}
+	}
+
+	public function change_password()
+	{
+		public function create(){
+			
+			$item = $this->UserModel->get(
+				array(
+					"id"	=> $this->user->id,
+				)
+			);
+			
+			$context=array(
+				"title"		=>	"Kullanıcı Güncelle",
+				"card_title"	=>	"Kullanıcı Güncelle",
+				"CKEditorField"	=>	array(
+					"description" => "description"
+				),
+				"item" 		=>	$item,
+			);
+			render_dashboard_view($context);
+		}
+		public function update(){
+			$this->load->library("form_validation");
+
+			$this->form_validation->set_rules("old_password", "Eski Şifre", "required|trim");
+			$this->form_validation->set_rules("new_password", "Yeni Şifre", "required|trim|matches[confirm_new_password]");
+			$this->form_validation->set_rules("confirm_new_password", "Yeni Şifre (Tekrar)", "required|trim");
+	
+			$this->form_validation->set_message(
+				array(
+					"required"  => "<b>{field}</b> alanı doldurulmalıdır",
+					"matches"   => "{field} & {param} uyuşmuyor",
+				)
+			);
+
+			$validate = $this->form_validation->run();
+			
+			if($validate){
+				if(md5($this->input->post("old_password")) == $this->user->password){
+
+					$update =$this->UserModel->update(
+						array(
+							"id"    => $this->user->id
+						),
+						array(
+							"password"   => md5($this->input->post("password")),
+						)
+					);
+					
+					toast_field_update($update);
+
+				}
+				else {
+					$ToastField	=	array(
+						"status"	=> "error",
+						"title"		=>	"İşlem başarısız.",
+						"message"		=>"Güncelleme olmadı :(",
+					);
+					$this->session->set_flashdata("ToastField", $ToastField);
+					redirect(base_url("admin/user/change_password"));
+				}
+			}
+			else{
+				$item = $this->UserModel->get(
+					array(
+						"id"	=> $this->user->id,
+					)
+				);
+				
+				$context=array(
+					"title"		=>	"Kullanıcı Güncelle",
+					"card_title"	=>	"Kullanıcı Güncelle",
+					"CKEditorField"	=>	array(
+						"description" => "description"
+					),
+					"item" 		=>	$item,
+					"form_errors"	=> validation_errors(),
+				);
+				render_dashboard_view($context);	
+			}
+		}
+		
+	}
+
+}
